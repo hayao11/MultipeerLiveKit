@@ -23,7 +23,7 @@ public final class MCSessionManager: NSObject,SessionHelperProtocol{
     private var gotTextDataCallback: ((Data, MCPeerID) -> Void)?
     private var runStateChangedCallback: ((RunStateType, Bool) -> Void)?
     //properties
-    private let readQueue: DispatchQueue = DispatchQueue.init(label: "com.hayao.MultipeeLiveVideoKit.read-stream-queue")
+    private let readQueue: DispatchQueue = DispatchQueue.init(label: "com.hayao.MultipeeLiveKit.read-stream-queue")
     
     private var readBufferSize = 24
     private var binaryImageReadSize = 8

@@ -34,9 +34,9 @@ final class MCSessionManagerTester: XCTestCase {
                 XCTAssertEqual(advertiser.connectedPeerIDs.isEmpty, false)
                 expect.fulfill()
             case .connectionFail:
-                Log("fail")
+                print("fail")
             case .tryConnecting:
-                Log("try")
+                print("try")
             }
         }) { _ in }
 
@@ -49,9 +49,9 @@ final class MCSessionManagerTester: XCTestCase {
                 XCTAssertEqual(advertiser.connectedPeerIDs.isEmpty, false)
                 expect.fulfill()
             case .tryConnecting:
-                Log("try")
+                print("try")
             case .connectionFail:
-                Log("fail")
+                print("fail")
             }
         }) { (foundIDs) in
             foundIDs.forEach {

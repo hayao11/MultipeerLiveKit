@@ -26,8 +26,8 @@
 		87C2149222365DAE001E1FA2 /* PeerIDTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C2149122365DAE001E1FA2 /* PeerIDTableCell.swift */; };
 		87C2149422365E13001E1FA2 /* ConnectionButtonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C2149322365E13001E1FA2 /* ConnectionButtonModel.swift */; };
 		87C2149622365EE5001E1FA2 /* PeerIDTableProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C2149522365EE5001E1FA2 /* PeerIDTableProtocols.swift */; };
-		87D9F4C92244A09800165950 /* MultipeerLiveKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D9F4C72244A08800165950 /* MultipeerLiveKit.framework */; };
-		87D9F4CA2244A09800165950 /* MultipeerLiveKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 87D9F4C72244A08800165950 /* MultipeerLiveKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		87D9F4DD2244DF5E00165950 /* MultipeerLiveKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D9F4D82244DD2F00165950 /* MultipeerLiveKit.framework */; };
+		87D9F4DE2244DF5E00165950 /* MultipeerLiveKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 87D9F4D82244DD2F00165950 /* MultipeerLiveKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		87ED8B1A22380B5E00251B71 /* CellContentCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87ED8B1922380B5D00251B71 /* CellContentCoordinator.swift */; };
 /* End PBXBuildFile section */
 
@@ -39,7 +39,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				87C2147922362589001E1FA2 /* SnapKit.framework in Embed Frameworks */,
-				87D9F4CA2244A09800165950 /* MultipeerLiveKit.framework in Embed Frameworks */,
+				87D9F4DE2244DF5E00165950 /* MultipeerLiveKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -67,7 +67,7 @@
 		87C2149122365DAE001E1FA2 /* PeerIDTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeerIDTableCell.swift; sourceTree = "<group>"; };
 		87C2149322365E13001E1FA2 /* ConnectionButtonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionButtonModel.swift; sourceTree = "<group>"; };
 		87C2149522365EE5001E1FA2 /* PeerIDTableProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeerIDTableProtocols.swift; sourceTree = "<group>"; };
-		87D9F4C72244A08800165950 /* MultipeerLiveKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MultipeerLiveKit.framework; sourceTree = "<group>"; };
+		87D9F4D82244DD2F00165950 /* MultipeerLiveKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MultipeerLiveKit.framework; sourceTree = "<group>"; };
 		87ED8B1922380B5D00251B71 /* CellContentCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellContentCoordinator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -76,7 +76,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				87D9F4C92244A09800165950 /* MultipeerLiveKit.framework in Frameworks */,
+				87D9F4DD2244DF5E00165950 /* MultipeerLiveKit.framework in Frameworks */,
 				872CFADD223F70AA007CF394 /* SnapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -117,7 +117,7 @@
 		873FC171223608FA008C7AB5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				87D9F4C72244A08800165950 /* MultipeerLiveKit.framework */,
+				87D9F4D82244DD2F00165950 /* MultipeerLiveKit.framework */,
 				87C2147622362579001E1FA2 /* SnapKit.framework */,
 			);
 			name = Frameworks;

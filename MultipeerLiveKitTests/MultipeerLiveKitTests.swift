@@ -9,8 +9,8 @@
 import XCTest
 import MultipeerConnectivity
 import MultipeerLiveKit
-
 @testable import MultipeerLiveKit
+
 
 class MultipeerLiveVideoKitTests: XCTestCase {
     
@@ -20,12 +20,12 @@ class MultipeerLiveVideoKitTests: XCTestCase {
         let testTimeout:TimeInterval = 5.0
 
         let expect = XCTestExpectation.init(description: "test")
+        expect.expectedFulfillmentCount = 2
         var managers: [MCSessionManager] = []
-        let sendText = "test!"
+        let sendText = "test"
         let serviceProtocol:MCSessionManager.ServiceProtocol = .textAndVideo
 
         for i in 0...1 {
-            
             let manager = MCSessionManager.init(displayName: name + String(i), serviceType: serviceType,serviceProtocol: serviceProtocol)
             let livePresenter = try! LivePresenter.init(mcSessionManager: manager, sendVideoInterval: 0.1)
 
@@ -43,7 +43,6 @@ class MultipeerLiveVideoKitTests: XCTestCase {
                 foundIDs.forEach {
                     manager.inviteTo(peerID: $0, timeout: 10)
                 }
-                Log(manager.connectedPeerIDs)
             }
             manager.onInvited { (_, acceptAnswer) in
                 acceptAnswer(true)
@@ -51,7 +50,7 @@ class MultipeerLiveVideoKitTests: XCTestCase {
 
             livePresenter.bindReceivedCallbacks(gotImage: { (_, _) in
                 //
-            }, gotAudioData: {(_, fromPeerID) in
+            }, gotAudioData: {(_, _) in
                 //
             }, gotTextMessage: {(msg, fromPeerID) in
                 if msg == sendText {
