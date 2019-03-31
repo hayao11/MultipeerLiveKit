@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "MultipeerLiveKit"
-  s.version      = "1.0"
+  s.version      = "1.0.1"
   s.summary      = "Multipeer Connectivity Wrapper."
   s.description  = <<-DESC
     - This library provides Live Camera and Text Chat.
