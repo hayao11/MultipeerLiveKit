@@ -11,6 +11,8 @@ import UIKit
 
 struct VideoDataConverter {
 
+    static let context: CIContext = CIContext.init(options: nil)
+    
     enum ConvertImageType {
         case jpg
         case png
@@ -50,7 +52,6 @@ struct VideoDataConverter {
     }
 
     static func convertImageFrom(ciimage: CIImage) -> UIImage? {
-        let context: CIContext = CIContext.init(options: nil)
         guard let cgImage = context.createCGImage(ciimage, from: ciimage.extent) else {
             return nil
         }
