@@ -19,7 +19,8 @@ public final class LivePresenter: NSObject {
     private var cameraInitPosition: AVCaptureDevice.Position
     private var sessionPreset: AVCaptureSession.Preset
     private let audioStreamName = "audio"
-    private let convertImageDataType: VideoDataConverter.ConvertImageType = .png
+    private let convertImageDataType: VideoDataConverter.ConvertImageType = .jpg
+    private let jpegCompressionQuality:CGFloat
     private var targetPeerID: MCPeerID!
     private var sendVideoInterval: TimeInterval
 
@@ -47,9 +48,13 @@ public final class LivePresenter: NSObject {
                                                               channels: 1,
                                                               interleaved: true)
 
-    public init(mcSessionManager: MCSessionManager, sendVideoInterval: TimeInterval, targetPeerID: MCPeerID?=nil,
-                cameraInitPosition: AVCaptureDevice.Position = .front, sessionPreset: AVCaptureSession.Preset = .low) throws {
+    public init(mcSessionManager: MCSessionManager, sendVideoInterval: TimeInterval,
+                videoCompressionQuality:CGFloat, targetPeerID: MCPeerID?=nil,
+                cameraInitPosition: AVCaptureDevice.Position = .front,
+                sessionPreset: AVCaptureSession.Preset = .low) throws {
+        
         self.sendVideoInterval = sendVideoInterval
+        self.jpegCompressionQuality = videoCompressionQuality
         self.targetPeerID = targetPeerID
         self.cameraInitPosition = cameraInitPosition
         self.sessionPreset = sessionPreset
@@ -72,7 +77,10 @@ public final class LivePresenter: NSObject {
         #endif
     }
 
-    public func bindReceivedCallbacks(gotImage:@escaping(UIImage?, MCPeerID) -> Void, gotAudioData:@escaping(Data, MCPeerID) -> Void, gotTextMessage: ((String, MCPeerID)->Void)?=nil) {
+    public func bindReceivedCallbacks(gotImage:@escaping(UIImage?, MCPeerID) -> Void,
+                                      gotAudioData:@escaping(Data, MCPeerID) -> Void,
+                                      gotTextMessage: ((String, MCPeerID)->Void)?=nil) {
+        
         mcSessionManager.onReceivedData(audioCallback: {[weak self] (audioData, fromPeerID) in
             guard
                 let weakSelf = self,
@@ -108,6 +116,7 @@ public final class LivePresenter: NSObject {
                 gotTextMessage?(message, fromPeerID)
             }
         }
+        
     }
 
     public func send(text: String, sendMode: MCSessionSendDataMode) throws {
@@ -145,7 +154,8 @@ public final class LivePresenter: NSObject {
 
     private func initModels() throws {
         #if !targetEnvironment(simulator)
-        try setUpCamera(initPosition: cameraInitPosition, sessionPreset: sessionPreset, avAudioFormat: avAudioFormat!)
+        try setUpCamera(initPosition: cameraInitPosition,
+                        sessionPreset: sessionPreset, avAudioFormat: avAudioFormat!)
         #endif
         try setUpAudioPlayer()
     }
@@ -162,8 +172,14 @@ public final class LivePresenter: NSObject {
         try audioPlayer = AudioPlayer.init(avAudioFormat: avAudioFormat)
     }
 
-    private func setUpCamera(initPosition: AVCaptureDevice.Position, sessionPreset: AVCaptureSession.Preset, avAudioFormat: AVAudioFormat) throws {
-        try mediaPresenter = MediaPresenter.init(initPosition: cameraInitPosition, sessionPreset: sessionPreset, avAudioFormat: avAudioFormat)
+    private func setUpCamera(initPosition: AVCaptureDevice.Position,
+                             sessionPreset: AVCaptureSession.Preset,
+                             avAudioFormat: AVAudioFormat) throws {
+        
+        try mediaPresenter = MediaPresenter.init(initPosition: cameraInitPosition,
+                                                 sessionPreset: sessionPreset,
+                                                 avAudioFormat: avAudioFormat)
+        
         mediaPresenter.captureSessionToRun(true)
     }
 
@@ -199,8 +215,11 @@ public final class LivePresenter: NSObject {
         do {
             let audioData = AudioConverter.audioBufferToNSData(pcmBuffer: audioBuffer)
             let image = VideoDataConverter.convertImageFrom(buffer: videoBuffer)
-            let imageData = VideoDataConverter.ImageToData(image, type: convertImageDataType)
-            try manager.send(videoData: imageData, audioData: audioData, audioStreamName: audioStreamName, sendMode: .reliable, target: peerID)
+            let imageData = VideoDataConverter.imageToJpegData(image,
+                                                               compressionQuality: jpegCompressionQuality)
+            try manager.send(videoData: imageData, audioData: audioData,
+                             audioStreamName: audioStreamName,
+                             sendMode: .reliable, target: peerID)
         } catch let error {
             Log(error)
         }

@@ -13,7 +13,7 @@ public final class MCSessionManager: NSObject,SessionHelperProtocol{
     //models
     private var browserModel: BrowserModel!
     private var advtiserModel: AdvertiserModel!
-    private var sessionHelper:SessionHelper!
+    private var videoOnlyHelper:VideoOnlyHelper!
     private var sessionHelperDelegate:SessionHelperProtocol?
     //callbacks
     var connectingStateCallback: ((MCPeerID, MCConnectionState) -> Void)?
@@ -23,10 +23,12 @@ public final class MCSessionManager: NSObject,SessionHelperProtocol{
     private var gotTextDataCallback: ((Data, MCPeerID) -> Void)?
     private var runStateChangedCallback: ((RunStateType, Bool) -> Void)?
     //properties
-    private let readQueue: DispatchQueue = DispatchQueue.init(label: "com.hayao.MultipeeLiveKit.read-stream-queue")
+    private let readQueue: DispatchQueue = .init(label: "com.hayao.MultipeeLiveKit.read-stream-queue")
     
     private var readBufferSize = 24
-    private var binaryImageReadSize = 8
+    private let imageDataType:VideoDataConverter.ConvertImageType = .jpg
+    private lazy var binaryImageReadSize = self.imageDataType == .jpg ? 2 : 8
+    private let jpegCompressRatio:CGFloat = 1.0
     private var session: MCSession?
     private var encryptionPreference: MCEncryptionPreference!
     private var streamHelper: MCStreamHelper!
@@ -101,15 +103,23 @@ public final class MCSessionManager: NSObject,SessionHelperProtocol{
     public private (set) var myPeerID:MCPeerID?
     public private (set) var serviceProtocol:ServiceProtocol
     
-    public init(displayName: String, serviceType: String,serviceProtocol:ServiceProtocol = .textAndVideo,encryptionPreference: MCEncryptionPreference = .required, discoveryInfo: [String: String]?=nil) {
+    public init(displayName: String, serviceType: String,
+                serviceProtocol:ServiceProtocol = .textAndVideo,
+                encryptionPreference: MCEncryptionPreference = .required,
+                discoveryInfo: [String: String]?=nil) {
+        
         self.serviceProtocol = serviceProtocol
         self.serviceType = serviceType + self.serviceProtocol.rawValue
         self.discoveryInfo = discoveryInfo
         self.encryptionPreference = encryptionPreference
         self.displayName = displayName
         super.init()
-        self.streamHelper = MCStreamHelper()
+        self.streamHelper = MCStreamHelper.init(imageDataType: self.imageDataType,
+                                                quality: jpegCompressRatio, readBufferSize: self.readBufferSize,
+                                                waitIntervalForReadStream: self.waitIntervalForReadStream,
+                                                readQueue: self.readQueue)
         self.sessionInit()
+        
     }
     
     public func inviteTo(peerID: MCPeerID, timeout: TimeInterval) {
@@ -206,11 +216,15 @@ public final class MCSessionManager: NSObject,SessionHelperProtocol{
         case .textAndVideo:
             sessionHelperDelegate = self
         case .videoOnly:
-            if sessionHelper == nil{
-               sessionHelper = SessionHelper.init(readQueue: readQueue, streamHelper: streamHelper,
-                                                  readBufferSize: readBufferSize,encryptionPreference: encryptionPreference)
+            if videoOnlyHelper == nil{
+                
+               videoOnlyHelper = VideoOnlyHelper.init(readQueue: readQueue, streamHelper: streamHelper,
+                                                      readBufferSize: readBufferSize,
+                                                      waitIntervalForReadStream: waitIntervalForReadStream,
+                                                      encryptionPreference: encryptionPreference)
             }
-            self.sessionHelperDelegate = sessionHelper
+            
+            self.sessionHelperDelegate = videoOnlyHelper
         }
         session?.delegate = sessionHelperDelegate
     }
@@ -247,6 +261,15 @@ public final class MCSessionManager: NSObject,SessionHelperProtocol{
         }
     }
     
+    private func isImageData(data:Data) -> Bool{
+        switch self.imageDataType {
+        case .jpg:
+            return DataReader.isJpegImageData(data, readSize: self.binaryImageReadSize)
+        case .png:
+            return DataReader.isPngImageData(data, readSize: self.binaryImageReadSize)
+        }
+    }
+    
     deinit {
         disconnect()
         //Log("deinit:\(className)")
@@ -264,30 +287,22 @@ extension MCSessionManager: MCSessionDelegate {
             self.sessionHelperDelegate?.connectingStateCallback?(peerID, .connectionFail)
         }
     }
-    
+
     public func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
-        if DataReader.isImageData(data, readSize: self.binaryImageReadSize) {
-            gotDataCallback?(data, peerID)
-        } else {
-            gotTextDataCallback?(data, peerID)
+        if self.isImageData(data: data){
+            gotDataCallback?(data,peerID)
+        }else{
+            gotTextDataCallback?(data,peerID)
         }
     }
-    
-    private func readStream(_ stream: InputStream, fromPeerID: MCPeerID) {
-        readQueue.asyncAfter(deadline: .now() + waitIntervalForReadStream, execute: {[weak self] in
-            guard let self = self else {return}
-            self.streamHelper.openStream(stream, readBufferSize: self.readBufferSize, receivedCallback: {[weak self] (data) in
-                guard let self = self else {return}
-                self.receivedDataCallback?(data, fromPeerID)
-            })
-        })
-        
-    }
-    
+
     public func session(_ session: MCSession, didReceive stream: InputStream, withName streamName: String, fromPeer peerID: MCPeerID) {
         guard stream.streamError == nil else {return}
         if stream.streamStatus == .notOpen {
-            self.readStream(stream, fromPeerID: peerID)
+           self.streamHelper.readStream(stream, fromPeerID: peerID) {[weak self] (data, fromPeerID) in
+                guard let self = self else {return}
+                self.receivedDataCallback?(data, fromPeerID)
+            }
         }
     }
     

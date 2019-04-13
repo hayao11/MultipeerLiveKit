@@ -9,29 +9,46 @@
 import Foundation
 
 struct DataReader {
-    static func isImageData(_ target: Data, readSize: Int?=nil) -> Bool {
+    static let pngHeader = "89504E470D0A1A0A"
+    static let jpegHeader = "FFD8"
 
+    static func isJpegImageData(_ target:Data,readSize:Int?=nil) -> Bool{
+        guard let targetStr = try? self.toHexStringFrom(data: target, readSize: readSize) else {
+            return false
+        }
+        
+        if isJpegImage(targetStr){ return true}
+        
+        return false
+    }
+    
+    static func isPngImageData(_ target: Data, readSize: Int?=nil) -> Bool {
         guard
             let targetStr = try? self.toHexStringFrom(data: target, readSize: readSize)
             else {
                 return false
         }
-
+        
         if self.isPngImage(targetStr) { return true }
         return false
     }
+    
+    private static func isJpegImage(_ str:String) -> Bool{
+        if str == jpegHeader {
+            return true
+        }
+        return false
+    }
+    
 
-    static let pngHeader = "89504E470D0A1A0A"
-
-    static func isPngImage(_ str: String) -> Bool {
-
+    private static func isPngImage(_ str: String) -> Bool {
         if str == pngHeader {
             return true
         }
         return false
     }
 
-    static func toHexStringFrom(data: Data, readSize: Int?=nil)throws -> String {
+    private static func toHexStringFrom(data: Data, readSize: Int?=nil)throws -> String {
 
         let _readSize = (readSize == nil || readSize! >= data.count) ? data.count : readSize!
         let kbData = data.subdata(in: 0..<_readSize)

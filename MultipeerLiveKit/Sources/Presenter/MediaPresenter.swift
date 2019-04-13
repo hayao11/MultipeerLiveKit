@@ -23,11 +23,15 @@ final class MediaPresenter: NSObject {
         return (video: cameraDelegate?.resultBuffer, audio: audioCaptureDelegate?.outputBuffer)
     }
 
-    init(initPosition: AVCaptureDevice.Position, sessionPreset: AVCaptureSession.Preset, avAudioFormat: AVAudioFormat?) throws {
+    init(initPosition: AVCaptureDevice.Position,
+         sessionPreset: AVCaptureSession.Preset,
+         avAudioFormat: AVAudioFormat?) throws {
+        
         self.avAudioFormat = avAudioFormat
         super.init()
         try self.setMovieCameraModel(initPosition: initPosition, sessionPreset: sessionPreset)
         try self.setUpAudio()
+        
     }
 
     func captureAudioSessionRunTo(_ flag: Bool) throws {
@@ -60,13 +64,17 @@ final class MediaPresenter: NSObject {
         cameraDelegate?.deinitCaptureSession()
     }
 
-    private func setMovieCameraModel(initPosition: AVCaptureDevice.Position, sessionPreset: AVCaptureSession.Preset) throws {
+    private func setMovieCameraModel(initPosition: AVCaptureDevice.Position,
+                                     sessionPreset: AVCaptureSession.Preset) throws {
+        
         #if !targetEnvironment(simulator)
-        cameraDelegate = SampleBufferCamera.init(initPosition: initPosition, sessionPreset: sessionPreset)
+        cameraDelegate = SampleBufferCamera.init(initPosition: initPosition,
+                                                 sessionPreset: sessionPreset)
         try cameraDelegate?.initUpMovieCamera()
         #else
         throw CameraError.canNotGetDevice
         #endif
+        
     }
 
     deinit {

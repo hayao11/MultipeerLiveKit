@@ -9,6 +9,33 @@
 import MultipeerConnectivity
 
 struct MCStreamHelper {
+    private let waitIntervalForReadStream:TimeInterval
+    private var readQueue:DispatchQueue
+    private let readBufferSize:Int
+    private let imageDataType:VideoDataConverter.ConvertImageType
+    private let quality:CGFloat
+
+    private let runLoopMode = RunLoop.Mode.default
+    private let runLoop = RunLoop.current
+    
+    init(imageDataType:VideoDataConverter.ConvertImageType ,
+         quality:CGFloat,readBufferSize:Int,
+         waitIntervalForReadStream:TimeInterval,readQueue:DispatchQueue){
+        self.imageDataType = imageDataType
+        self.quality = quality
+        self.readBufferSize = readBufferSize
+        self.waitIntervalForReadStream = waitIntervalForReadStream
+        self.readQueue = readQueue
+    }
+   
+    func convertImageDataFrom(image:UIImage) -> (pointer:UnsafePointer<UInt8>,size:Int)? {
+        switch imageDataType {
+        case .jpg:
+            return VideoDataConverter.createJpegDataFrom(image: image, quality: quality)
+        case .png:
+            return VideoDataConverter.createPngDataFrom(image: image)
+        }
+    }
 
     func send(session: MCSession, data: Data, sendMode: MCSessionSendDataMode, targets: [MCPeerID]) throws {
         try session.send(data, toPeers: targets, with: sendMode)
@@ -24,18 +51,22 @@ struct MCStreamHelper {
     }
 
     func startStream(session: MCSession, image: UIImage, name: String, targetPeerID: MCPeerID) throws {
-
-        guard let pointerData = VideoDataConverter.createDataFrom(image: image) else {return}
+        guard let pointerData = convertImageDataFrom(image: image) else {return}
 
         let outputStream = try session.startStream(withName: name, toPeer: targetPeerID)
         sendStream(outputStream: outputStream, name: name, unsafePointer: pointerData.0, dataSize: pointerData.1)
 
     }
+    
+    func readStream(_ stream: InputStream, fromPeerID: MCPeerID,callback:@escaping(Data,MCPeerID)->Void) {
+        readQueue.asyncAfter(deadline: .now() + waitIntervalForReadStream, execute: {
+            self.openStream(stream, readBufferSize: self.readBufferSize, receivedCallback: { (data) in
+                callback(data,fromPeerID)
+            })
+        })
+    }
 
     private func sendStream(outputStream: OutputStream, name: String, unsafePointer: UnsafePointer<UInt8>, dataSize: Int) {
-
-        let runLoopMode = RunLoop.Mode.default
-        let runLoop = RunLoop.current
 
         outputStream.schedule(in: runLoop, forMode: runLoopMode)
         outputStream.open()
@@ -49,11 +80,9 @@ struct MCStreamHelper {
         outputStream.write(unsafePointer, maxLength: dataSize)
     }
 
-    func openStream(_ stream: InputStream, readBufferSize: Int, receivedCallback: (Data) -> Void) {
+   private func openStream(_ stream: InputStream, readBufferSize: Int, receivedCallback: (Data) -> Void) {
 
         let buffer = UnsafeMutablePointer<UInt8>.allocate(capacity: readBufferSize)
-        let runLoopMode = RunLoop.Mode.default
-        let runLoop = RunLoop.current
         var data = Data()
 
         stream.schedule(in: runLoop, forMode: runLoopMode)

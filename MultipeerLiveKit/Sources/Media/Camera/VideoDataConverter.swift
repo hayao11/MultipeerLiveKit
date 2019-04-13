@@ -47,21 +47,22 @@ struct VideoDataConverter {
             let _buffer = buffer,
             let imageBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(_buffer)
             else { return nil }
-        let ciimage: CIImage = CIImage(cvPixelBuffer: imageBuffer)
+        
+        let ciimage: CIImage = .init(cvPixelBuffer: imageBuffer)
         return self.convertImageFrom(ciimage: ciimage)
-    }
-
-    static func convertImageFrom(ciimage: CIImage) -> UIImage? {
-        guard let cgImage = context.createCGImage(ciimage, from: ciimage.extent) else {
-            return nil
-        }
-        let image = UIImage.init(cgImage: cgImage, scale: 0, orientation: .right)
-        return image
     }
 
     static func convertImageFrom(data: Data) -> UIImage? {
         let ciimage: CIImage = CIImage.init(data: data)!
         return self.convertImageFrom(ciimage: ciimage)
+    }
+
+    private static func convertImageFrom(ciimage: CIImage) -> UIImage? {
+        guard let cgImage = context.createCGImage(ciimage, from: ciimage.extent) else {
+            return nil
+        }
+        let image:UIImage = .init(cgImage: cgImage, scale: 0, orientation: .right)
+        return image
     }
 
     static func createPointerFrom(data: Data) -> (pointer: UnsafePointer<UInt8>, size: Int) {
@@ -75,7 +76,7 @@ struct VideoDataConverter {
         return (pointer:unsafePointer, size:nsData.length)
     }
 
-    static func createDataFrom(image: UIImage) -> (UnsafePointer<UInt8>, Int)? {
+    static func createPngDataFrom(image: UIImage) -> (UnsafePointer<UInt8>, Int)? {
         guard let data = image.pngData() else {
             return nil
         }
@@ -83,14 +84,23 @@ struct VideoDataConverter {
         let unsafePointer = nsData.bytes.bindMemory(to: UInt8.self, capacity: 1)
         return (unsafePointer, nsData.length)
     }
-
-    static func ImageToData(_ image: UIImage?, type: ConvertImageType) -> Data? {
-        guard let _image = image else {return nil}
-        switch type {
-        case .png:
-            return _image.pngData()
-        case .jpg:
-            return _image.jpegData(compressionQuality: 1.0)
+    
+    static func createJpegDataFrom(image:UIImage,quality:CGFloat) -> (pointer:UnsafePointer<UInt8>,size:Int)? {
+        guard let data = image.jpegData(compressionQuality: quality) else {
+            return nil
         }
+        let nsData = data as NSData
+        let unsafePointer = nsData.bytes.bindMemory(to: UInt8.self, capacity: 1)
+        return (unsafePointer,nsData.length)
     }
+    
+    static func imageToJpegData(_ image:UIImage?,compressionQuality:CGFloat) -> Data?{
+        guard let _image = image else { return nil }
+        return _image.jpegData(compressionQuality: compressionQuality)
+    }
+
+    static func imageToPngData(_ image:UIImage?) -> Data?{
+        return image?.pngData()
+    }
+
 }

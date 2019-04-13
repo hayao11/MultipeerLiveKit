@@ -14,8 +14,9 @@
 		873FC1672236072D008C7AB5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873FC1652236072D008C7AB5 /* LaunchScreen.storyboard */; };
 		87593697223E293300AF47AF /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87593696223E293300AF47AF /* Colors.swift */; };
 		87593699223E2B2300AF47AF /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87593698223E2B2300AF47AF /* UIColor+.swift */; };
-		87AB30012250B0FF000786D6 /* MultipeerLiveKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87AB2FFF2250B0F8000786D6 /* MultipeerLiveKit.framework */; };
-		87AB30022250B0FF000786D6 /* MultipeerLiveKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 87AB2FFF2250B0F8000786D6 /* MultipeerLiveKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		87AB30082251D133000786D6 /* MultipeerLiveKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87AB30072251D133000786D6 /* MultipeerLiveKit.framework */; };
+		87AB30092251D138000786D6 /* MultipeerLiveKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87AB30072251D133000786D6 /* MultipeerLiveKit.framework */; };
+		87AB300A2251D138000786D6 /* MultipeerLiveKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 87AB30072251D133000786D6 /* MultipeerLiveKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		87C2146B223614A2001E1FA2 /* LiveViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C2146A223614A2001E1FA2 /* LiveViewModel.swift */; };
 		87C2146D223614FE001E1FA2 /* LiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C2146C223614FE001E1FA2 /* LiveView.swift */; };
 		87C2147522361711001E1FA2 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C2147422361711001E1FA2 /* UIView+.swift */; };
@@ -39,7 +40,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				87C2147922362589001E1FA2 /* SnapKit.framework in Embed Frameworks */,
-				87AB30022250B0FF000786D6 /* MultipeerLiveKit.framework in Embed Frameworks */,
+				87AB300A2251D138000786D6 /* MultipeerLiveKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -55,7 +56,7 @@
 		873FC1682236072D008C7AB5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		87593696223E293300AF47AF /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		87593698223E2B2300AF47AF /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
-		87AB2FFF2250B0F8000786D6 /* MultipeerLiveKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MultipeerLiveKit.framework; sourceTree = "<group>"; };
+		87AB30072251D133000786D6 /* MultipeerLiveKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MultipeerLiveKit.framework; path = ../Carthage/Build/iOS/MultipeerLiveKit.framework; sourceTree = "<group>"; };
 		87C2146A223614A2001E1FA2 /* LiveViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveViewModel.swift; sourceTree = "<group>"; };
 		87C2146C223614FE001E1FA2 /* LiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveView.swift; sourceTree = "<group>"; };
 		87C2147422361711001E1FA2 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
@@ -76,7 +77,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				87AB30012250B0FF000786D6 /* MultipeerLiveKit.framework in Frameworks */,
+				87AB30092251D138000786D6 /* MultipeerLiveKit.framework in Frameworks */,
+				87AB30082251D133000786D6 /* MultipeerLiveKit.framework in Frameworks */,
 				872CFADD223F70AA007CF394 /* SnapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -87,7 +89,7 @@
 		873FC1502236072C008C7AB5 = {
 			isa = PBXGroup;
 			children = (
-				873FC15B2236072C008C7AB5 /* MultiPeerVideoKitDemo */,
+				873FC15B2236072C008C7AB5 /* MultiPeerLiveKitDemo */,
 				873FC15A2236072C008C7AB5 /* Products */,
 				873FC171223608FA008C7AB5 /* Frameworks */,
 			);
@@ -101,7 +103,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		873FC15B2236072C008C7AB5 /* MultiPeerVideoKitDemo */ = {
+		873FC15B2236072C008C7AB5 /* MultiPeerLiveKitDemo */ = {
 			isa = PBXGroup;
 			children = (
 				873FC15C2236072C008C7AB5 /* AppDelegate.swift */,
@@ -111,13 +113,13 @@
 				87C2148E22365B63001E1FA2 /* Utils */,
 				87C2147B223627D5001E1FA2 /* defaultItems */,
 			);
-			path = MultiPeerVideoKitDemo;
+			path = MultiPeerLiveKitDemo;
 			sourceTree = "<group>";
 		};
 		873FC171223608FA008C7AB5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				87AB2FFF2250B0F8000786D6 /* MultipeerLiveKit.framework */,
+				87AB30072251D133000786D6 /* MultipeerLiveKit.framework */,
 				87C2147622362579001E1FA2 /* SnapKit.framework */,
 			);
 			name = Frameworks;
@@ -420,7 +422,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				INFOPLIST_FILE = "$(SRCROOT)/MultiPeerVideoKitDemo/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/MultiPeerLiveKitDemo/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -445,7 +447,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				INFOPLIST_FILE = "$(SRCROOT)/MultiPeerVideoKitDemo/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/MultiPeerLiveKitDemo/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

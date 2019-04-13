@@ -31,7 +31,7 @@
 		87C214A222366243001E1FA2 /* MultipeerLiveKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 873FC1172235FC21008C7AB5 /* MultipeerLiveKit.framework */; };
 		87C214AC22366D83001E1FA2 /* utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873FC12D2235FDBC008C7AB5 /* utils.swift */; };
 		87D9F4C12244846400165950 /* MCSessionManagerTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C214A9223666C6001E1FA2 /* MCSessionManagerTester.swift */; };
-		87D9F4C422448A1C00165950 /* SessionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D9F4C322448A1C00165950 /* SessionHelper.swift */; };
+		87D9F4C422448A1C00165950 /* VideoOnlyHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D9F4C322448A1C00165950 /* VideoOnlyHelper.swift */; };
 		87D9F4C62244995A00165950 /* MultipeerLiveKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C2149F22366243001E1FA2 /* MultipeerLiveKitTests.swift */; };
 		87ED8B182236BB1A00251B71 /* AudioProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87ED8B172236BB1A00251B71 /* AudioProtocols.swift */; };
 /* End PBXBuildFile section */
@@ -82,7 +82,7 @@
 		87C214A122366243001E1FA2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		87C214A9223666C6001E1FA2 /* MCSessionManagerTester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCSessionManagerTester.swift; sourceTree = "<group>"; };
 		87D9F4AA2243554300165950 /* MultiPeerLiveKitDemo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MultiPeerLiveKitDemo.xcodeproj; path = Demo/MultiPeerLiveKitDemo.xcodeproj; sourceTree = "<group>"; };
-		87D9F4C322448A1C00165950 /* SessionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SessionHelper.swift; path = MultipeerLiveKit/Sources/Helpers/SessionHelper.swift; sourceTree = SOURCE_ROOT; };
+		87D9F4C322448A1C00165950 /* VideoOnlyHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VideoOnlyHelper.swift; path = MultipeerLiveKit/Sources/Helpers/VideoOnlyHelper.swift; sourceTree = SOURCE_ROOT; };
 		87ED8B172236BB1A00251B71 /* AudioProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioProtocols.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -149,7 +149,7 @@
 				873FC1252235FC91008C7AB5 /* AdvertisingModel.swift */,
 				873FC1272235FCA2008C7AB5 /* BrowserModel.swift */,
 				873FC1292235FD3F008C7AB5 /* MultipeerProtocols.swift */,
-				87D9F4C322448A1C00165950 /* SessionHelper.swift */,
+				87D9F4C322448A1C00165950 /* VideoOnlyHelper.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -407,7 +407,7 @@
 				873FC14C22360412008C7AB5 /* MediaPresenter.swift in Sources */,
 				873FC14F22360494008C7AB5 /* LivePresenter.swift in Sources */,
 				87593675223CA74700AF47AF /* PeerIDHelper.swift in Sources */,
-				87D9F4C422448A1C00165950 /* SessionHelper.swift in Sources */,
+				87D9F4C422448A1C00165950 /* VideoOnlyHelper.swift in Sources */,
 				873FC1332235FF30008C7AB5 /* MCPeerID+.swift in Sources */,
 				873FC14622360358008C7AB5 /* AudioDataConverter.swift in Sources */,
 				873FC170223607D7008C7AB5 /* VideoDataConverter.swift in Sources */,

@@ -97,9 +97,7 @@ mcSessionManager.onRunStateChange { (rollType, isRun) in
         
 ``` swift
 mcSessionManager.onInvited { (fromPeerID, acceptAnswer) in
-
-     acceptAnswer(true)
-  
+   acceptAnswer(true)
 }
 
 ```        
@@ -119,10 +117,20 @@ mcSessionManager.canselConectRequestTo(peerID: id)
 
 ### #LivePresenter#
 LivePresenter is a class mainly for providing camera functions and processing of data transmission / reception.
-Considering the load on the device, it is recommended to set sendVideoInterval to 0.1 or more, and set sessionPreset to low.
+Considering the load on the device, it is recommended to set sendVideoInterval to 0.1 or more, and set sessionPreset to medium.
 ``` swift
+
+  let sendInterval:TimeInterval = 0.1
+  let videoCompressionQuality:CGFloat = 0.8
+  let sessionPreset:AVCaptureSession.Preset = .medium
+  
 do{
-  self.livePresenter = try LivePresenter.init(mcSessionManager: mcSessionManager, sendVideoInterval: 0.1, sessionPreset: .low)
+
+  try livePresenter = LivePresenter.init(mcSessionManager: mcSessionManager,
+                                         sendVideoInterval: sendVideoInterval,
+                                         videoCompressionQuality: videoCompressionQuality,
+                                         targetPeerID: targetPeerID,
+                                         sessionPreset: sessionPreset)
 }catch let error{
   print(error)
 }

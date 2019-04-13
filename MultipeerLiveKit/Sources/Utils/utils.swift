@@ -8,10 +8,10 @@
 
 import Foundation
 
-func Log<T>(_ msg: T, func_name: String=#function, _ line: Int=#line, _ file: String=#file) {
-    #if DEBUG
+func Log<T>(_ msg: T, funcName: String=#function, _ line: Int=#line, _ file: String=#file) {
+    //#if DEBUG
     let fileName = file.split(separator: "/").last!
-    let message = "Log -> func_name: \(func_name) line: \(line) file_name: \(fileName)\nmsg: \(msg) "
+    let message = "Log -> func-name: \(funcName) line: \(line) file-name: \(fileName)\nmsg: \(msg) "
     print(message)
-    #endif
+    //#endif
 }
