@@ -13,7 +13,7 @@
 		873FC1282235FCA2008C7AB5 /* BrowserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873FC1272235FCA2008C7AB5 /* BrowserModel.swift */; };
 		873FC12A2235FD3F008C7AB5 /* MultipeerProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873FC1292235FD3F008C7AB5 /* MultipeerProtocols.swift */; };
 		873FC12E2235FDBC008C7AB5 /* utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873FC12D2235FDBC008C7AB5 /* utils.swift */; };
-		873FC1312235FECF008C7AB5 /* McSessionStreamHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873FC1302235FECF008C7AB5 /* McSessionStreamHelper.swift */; };
+		873FC1312235FECF008C7AB5 /* MCStreamHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873FC1302235FECF008C7AB5 /* MCStreamHelper.swift */; };
 		873FC1332235FF30008C7AB5 /* MCPeerID+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873FC1322235FF30008C7AB5 /* MCPeerID+.swift */; };
 		873FC1352235FFF5008C7AB5 /* NSObject+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873FC1342235FFF5008C7AB5 /* NSObject+.swift */; };
 		873FC13722360052008C7AB5 /* RandomGenerater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873FC13622360052008C7AB5 /* RandomGenerater.swift */; };
@@ -62,7 +62,7 @@
 		873FC1272235FCA2008C7AB5 /* BrowserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserModel.swift; sourceTree = "<group>"; };
 		873FC1292235FD3F008C7AB5 /* MultipeerProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipeerProtocols.swift; sourceTree = "<group>"; };
 		873FC12D2235FDBC008C7AB5 /* utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = utils.swift; sourceTree = "<group>"; };
-		873FC1302235FECF008C7AB5 /* McSessionStreamHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = McSessionStreamHelper.swift; sourceTree = "<group>"; };
+		873FC1302235FECF008C7AB5 /* MCStreamHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCStreamHelper.swift; sourceTree = "<group>"; };
 		873FC1322235FF30008C7AB5 /* MCPeerID+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MCPeerID+.swift"; sourceTree = "<group>"; };
 		873FC1342235FFF5008C7AB5 /* NSObject+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+.swift"; sourceTree = "<group>"; };
 		873FC13622360052008C7AB5 /* RandomGenerater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomGenerater.swift; sourceTree = "<group>"; };
@@ -158,7 +158,7 @@
 			isa = PBXGroup;
 			children = (
 				87593674223CA74700AF47AF /* PeerIDHelper.swift */,
-				873FC1302235FECF008C7AB5 /* McSessionStreamHelper.swift */,
+				873FC1302235FECF008C7AB5 /* MCStreamHelper.swift */,
 				873FC13622360052008C7AB5 /* RandomGenerater.swift */,
 				873FC1382236008D008C7AB5 /* TimerManager.swift */,
 				873FC143223602F8008C7AB5 /* DataReader.swift */,
@@ -412,7 +412,7 @@
 				873FC14622360358008C7AB5 /* AudioDataConverter.swift in Sources */,
 				873FC170223607D7008C7AB5 /* VideoDataConverter.swift in Sources */,
 				87ED8B182236BB1A00251B71 /* AudioProtocols.swift in Sources */,
-				873FC1312235FECF008C7AB5 /* McSessionStreamHelper.swift in Sources */,
+				873FC1312235FECF008C7AB5 /* MCStreamHelper.swift in Sources */,
 				873FC1482236036A008C7AB5 /* AudioCaptureModel.swift in Sources */,
 				873FC14A2236037F008C7AB5 /* AudioPlayer.swift in Sources */,
 				873FC12E2235FDBC008C7AB5 /* utils.swift in Sources */,
