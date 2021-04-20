@@ -43,6 +43,8 @@ extension VideoOnlyHelper: MCSessionDelegate {
             connectingStateCallback?(peerID, .connected)
         case .notConnected:
             connectingStateCallback?(peerID, .connectionFail)
+        @unknown default:
+            fatalError()
         }
     }
     
@@ -60,7 +62,7 @@ extension VideoOnlyHelper: MCSessionDelegate {
         }
     }
     
-    private func session(_ session: MCSession, didReceiveCertificate certificate: [Any]?, fromPeer peerID: MCPeerID, certificateHandler: @escaping (Bool) -> Void) {
+    public func session(_ session: MCSession, didReceiveCertificate certificate: [Any]?, fromPeer peerID: MCPeerID, certificateHandler: @escaping (Bool) -> Void) {
         if encryptionPreference == .required {
             certificateHandler(true)
         }

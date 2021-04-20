@@ -27,7 +27,7 @@ class MultipeerLiveVideoKitTests: XCTestCase {
 
         for i in 0...1 {
             let manager = MCSessionManager.init(displayName: name + String(i), serviceType: serviceType,serviceProtocol: serviceProtocol)
-            let livePresenter = try! LivePresenter.init(mcSessionManager: manager, sendVideoInterval: 0.1)
+            let livePresenter = try! LivePresenter.init(mcSessionManager: manager, sendVideoInterval: 0.1, videoCompressionQuality: 0.8)
 
             manager.onStateChanaged(connecting: { (peerID, state) in
                 

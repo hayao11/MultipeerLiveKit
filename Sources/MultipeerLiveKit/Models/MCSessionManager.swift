@@ -285,6 +285,8 @@ extension MCSessionManager: MCSessionDelegate {
             self.sessionHelperDelegate?.connectingStateCallback?(peerID, .connected)
         case .notConnected:
             self.sessionHelperDelegate?.connectingStateCallback?(peerID, .connectionFail)
+        @unknown default:
+            fatalError()
         }
     }
 
@@ -306,7 +308,7 @@ extension MCSessionManager: MCSessionDelegate {
         }
     }
     
-    private func session(_ session: MCSession, didReceiveCertificate certificate: [Any]?, fromPeer peerID: MCPeerID, certificateHandler: @escaping (Bool) -> Void) {
+    public func session(_ session: MCSession, didReceiveCertificate certificate: [Any]?, fromPeer peerID: MCPeerID, certificateHandler: @escaping (Bool) -> Void) {
         if encryptionPreference == .required {
             certificateHandler(true)
         }
